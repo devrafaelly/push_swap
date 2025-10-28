@@ -10,49 +10,65 @@
 #                                                                              #
 # **************************************************************************** #
 
-CC = cc
-CFLAGS = -Wall -Werror -Wextra -g
+NAME        := push_swap
+CC          := cc
+CFLAGS      := -Wall -Wextra -Werror -g
 
-OBJ = $(SRC:.c=.o)
-SRC = 
+# Directories
+SRC_DIRS     := src
+OBJ_DIR      := build
+INCLUDE_DIRS := includes $(LIBFT_DIR)
+INCLUDES     := $(foreach dir,$(INCLUDE_DIRS),-I$(dir))
 
-NAME = push_swap
+# Library
+LIBFT_DIR   := libft
+LIBFT       := $(LIBFT_DIR)/libft.a
+LIBFT_FLAGS := -L$(LIBFT_DIR) -lft
 
-INCLUDES = $(LIBFT_INCLUDES)
+# Colors
+GREEN  := \033[0;32m
+YELLOW := \033[0;33m
+RED    := \033[0;31m
+BLUE   := \033[0;34m
+RESET  := \033[0m
 
-LIBFT_DIR = ./libft
-LIBFT = $(LIBFT_DIR)/libft.a
-LIBFT_INCLUDES = -I$(LIBFT_DIR)
-LIBFT_FLAGS = -L$(LIBFT_DIR) -lft
+# Files
+SRC := $(shell find $(SRC_DIRS) -name "*.c")
+OBJ := $(patsubst %.c,$(OBJ_DIR)/%.o,$(SRC))
 
-%.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-	@echo "$@ ✔️"
-
+# Rules
 all: $(NAME)
 
-$(NAME): $(OBJ) $(LIBFT) $(MLX)
+$(NAME): $(OBJ) $(LIBFT)
+	@echo "$(YELLOW)🔧 Linking objects...$(RESET)"
 	@$(CC) $(CFLAGS) $(OBJ) $(LIBFT_FLAGS) -o $(NAME)
-	@echo "$@ compilado ✔️"
-	
+	@echo "$(GREEN)✅ $(NAME) built successfully!$(RESET)"
+
+# Compile objects maintaining folder structure
+$(OBJ_DIR)/%.o: %.c
+	@mkdir -p $(dir $@)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+# Libft
 $(LIBFT):
-	@echo "Compilando libft..."
-	@make -C $(LIBFT_DIR)
-	@echo "libft compilada ✔️"
+	@echo "$(YELLOW)📚 Building libft...$(RESET)"
+	@$(MAKE) -C $(LIBFT_DIR) --silent
+	@echo "$(GREEN)✅ libft built!$(RESET)"
 
-norminette:
-	norminette $(SRC) -R CheckForbiddenSourceHeader
-
+# Clean
 clean:
-	@rm -f $(OBJ)
-	@make clean -C $(LIBFT_DIR) --silent
-	@echo "Arquivos .o limpos 🧴"
+	@rm -rf $(OBJ_DIR)
+	@$(MAKE) clean -C $(LIBFT_DIR) --silent
+	@echo "$(RED)🧴 Object files removed.$(RESET)"
 
 fclean: clean
 	@rm -f $(NAME)
-	@make fclean -C $(LIBFT_DIR) --silent
-	@echo "Tudo limpo 🧽🧼"
+	@echo "$(RED)🧼 Everything cleaned!$(RESET)"
 
 re: fclean all
+
+norminette:
+	@echo "$(YELLOW)🧠 Running norminette...$(RESET)"
+	@norminette $(SRC) -R CheckForbiddenSourceHeader || true
 
 .PHONY: all clean fclean re norminette
