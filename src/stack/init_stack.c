@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   init_stack.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: rafaoliv <rafaoliv@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/21 19:05:20 by marvin            #+#    #+#             */
 /*   Updated: 2025/10/21 19:05:20 by marvin           ###   ########.fr       */
@@ -12,66 +12,44 @@
 
 #include "push_swap.h"
 
-char	**parse_args(int ac, char **av)
+static t_stack	*build_stack(char **numbers)
 {
+	t_stack	*stack;
+	t_stack	*node;
+	int	i;
+
+	stack = NULL;
+	i = 0;
+	while (numbers[i])
+	{
+		node = new_stack_node(ft_atoi(numbers[i]), i);
+		if (!node)
+		{
+			stack_clear(&stack);
+			return (NULL);
+		}
+		stack_add_back(&stack, node);
+		i++;
+	}
+	return (stack);
+}
+
+t_stack	*init_stack(int ac, char **av)
+{
+	t_stack	*stack;
 	char	**numbers;
 
+	if (ac <= 1)
+		return (NULL);
+	numbers = parse_args(ac, av);
+	if (!numbers)
+		return (NULL);
+	if (!is_valid_number(numbers))
+		return (error());
+	if (!check_duplicates(numbers))
+		return (error());
+	stack = build_stack(numbers);
 	if (ac == 2)
-		numbers = ft_split(av[1], ' ');
-	else
-		numbers = av + 1;
-	return (numbers);
-}
-
-int	is_valid_number(char **numbers)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (numbers[i])
-	{
-		j = 0;
-		if (numbers[i][j] == '-' || numbers[i][j] == '+')
-				j++;
-		if (!numbers[i][j])
-			return (0);
-		while (numbers[i][j])
-		{
-			if (!isdigit(numbers[i][j]))
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
-}
-
-int	check_duplicates(char **numbers)
-{
-	int	value_i;
-	int	value_j;
-	int	error;
-	int	i;
-	int	j;
-
-	i = 0;
-	while (numbers[i])
-	{
-		value_i = overflow_atoi(numbers[i], &error);
-		if (error)
-			return (0);
-		j = i + 1;
-		while(numbers[j])
-		{
-			value_j = overflow_atoi(numbers[j], &error);
-			if (error)
-				return (0);
-			if (value_i == value_j)
-				return (0);
-			j++;
-		}
-		i++;
-	}
-	return (1);
+		numbers = memory_cleaner(numbers, 1);
+	return (stack);
 }
