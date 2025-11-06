@@ -1,50 +1,52 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   rotate.c                                           :+:      :+:    :+:   */
+/*   reverse_rotate.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/10/27 20:48:00 by codespace         #+#    #+#             */
-/*   Updated: 2025/11/06 00:17:22 by codespace        ###   ########.fr       */
+/*   Created: 2025/10/27 20:47:44 by codespace         #+#    #+#             */
+/*   Updated: 2025/11/06 00:17:34 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int rotate(t_stack **stack)
+static int rr(t_stack **stack)
 {
-    t_stack *first;
+    t_stack *prev;
     t_stack *last;
 
     if (stack && *stack && (*stack)->next)
     {
-        first = *stack;
+        prev = *stack;
         last = *stack;
-        *stack = (*stack)->next;
         while (last->next)
             last = last->next;
-        last->next = first;
-        first->next = NULL;
+        while (prev->next != last)
+            prev = prev->next;
+        last->next = *stack;
+        prev->next = NULL;
+        *stack = last;
         return (1);
     }
     return (0);
 }
 
-void    ra(t_stack **stack_a)
+void    rra(t_stack **stack_a)
 {
-    if (rotate(stack_a))
-        ft_putstr_fd("ra\n", 1);
+    if (rr(stack_a))
+        ft_putstr_fd("rra\n", 1);
 }
 
-void    rb(t_stack **stack_b)
+void    rrb(t_stack **stack_b)
 {
-    if (rotate(stack_b))
-        ft_putstr_fd("rb\n", 1);
+    if (rr(stack_b))
+        ft_putstr_fd("rrb\n", 1);
 }
 
-void    rr(t_stack **stack_a, t_stack **stack_b)
+void    rrr(t_stack **stack_a, t_stack **stack_b)
 {
-    if (rotate(stack_a) || rotate(stack_b))
-        ft_putstr_fd("rr\n", 1);
+    if (rr(stack_a) || rr(stack_b))
+        ft_putstr_fd("rrr\n", 1);
 }
