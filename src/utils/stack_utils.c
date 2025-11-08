@@ -35,13 +35,13 @@ void	stack_add_back(t_stack **stack, t_stack *new)
 {
 	t_stack	*temp;
 
-	if (!lst || !new)
+	if (!stack || !new)
 		return ;
-	if (!*lst)
-		*lst = new;
+	if (!*stack)
+		*stack = new;
 	else
 	{
-		temp = *lst;
+		temp = *stack;
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new;

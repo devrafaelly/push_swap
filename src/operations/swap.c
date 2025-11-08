@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 20:48:04 by codespace         #+#    #+#             */
-/*   Updated: 2025/10/27 20:49:27 by codespace        ###   ########.fr       */
+/*   Updated: 2025/11/08 19:19:19 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,20 @@ static int    swap(t_stack **stack)
         (*stack)->value = (*stack)->next->value;
         (*stack)->next->value = temp;
         return (1);
+    }
+    return (0);
+}
+
+static int    swap(t_stack **stack)
+{
+    t_stack *temp;
+
+    if (*stack && (*stack)->next)
+    {
+        temp = *stack;
+        *stack = (*stack)->next;
+        temp->next = (*stack)->next;
+        (*stack)->next = temp;
     }
     return (0);
 }

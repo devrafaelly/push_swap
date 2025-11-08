@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-t_stack error(void)
+t_stack *error(void)
 {
     ft_putstr_fd("Error", 2);
     return (NULL);
