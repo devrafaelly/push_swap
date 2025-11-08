@@ -50,6 +50,6 @@ t_stack	*init_stack(int ac, char **av)
 		return (error());
 	stack = build_stack(numbers);
 	if (ac == 2)
-		numbers = memory_cleaner(numbers, 1);
+		numbers = memory_cleaner(numbers, 0);
 	return (stack);
 }

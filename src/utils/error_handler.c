@@ -32,3 +32,14 @@ void	free_stack(t_stack **stack)
 	}
 	*stack = NULL;
 }
+
+static	char	**memory_cleaner(char **array, unsigned int i)
+{
+	while (*array)
+	{
+		free(*array);
+		array++;
+	}
+	free(array);
+	return (NULL);
+}

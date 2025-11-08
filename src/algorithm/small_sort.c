@@ -6,7 +6,7 @@
 /*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/27 20:48:08 by codespace         #+#    #+#             */
-/*   Updated: 2025/11/06 01:31:56 by codespace        ###   ########.fr       */
+/*   Updated: 2025/11/08 19:33:29 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,23 @@ static void    sort_two(t_stack **stack_a)
     }
 }
 
-static void    sort_three(t_stack **stack)
+void    sort_three(t_stack **stack)
 {
     t_stack *temp;
+    int max_index;
     int count;
 
     if (!stack || !*stack || !(*stack)->next)
             return ;
+    max_index = find_max(*stack);
     count = 0;
-    while (!is_sorted(*stack))
-    {
-        if ((*stack)->index == 2)
-            ra(stack);
-        else if ((*stack)->next->index == 2)
-            rra(stack);
-        else
-            sa(stack);
-    }
+    if ((*stack)->index == max_index)
+        ra(stack);
+    else if ((*stack)->next->index == max_index)
+        rra(stack);
+    else if (!is_sorted(*stack))
+        sa(stack);
+
 }
 
 static void    sort_four(t_stack **stack_a, t_stack **stack_b)

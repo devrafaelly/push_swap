@@ -56,6 +56,7 @@ void    rrr(t_stack **stack_a, t_stack **stack_b);
 void	algorithm(t_stack **stack_a, t_stack **stack_b);
 void    split_stack(t_stack **stack_a, t_stack **stack_b);
 void	sort_small(t_stack **stack_a, t_stack **stack_b);
+void    sort_three(t_stack **stack);
 void	movement_cost(t_stack *stack_a, t_stack *stack_b);
 void    movement_logic(t_stack **stack_a, t_stack **stack_b);
 void	move_rr(t_stack **a, t_stack **b, t_stack *c);
@@ -74,6 +75,7 @@ void    bring_to_top(t_stack **stack);
 long	ft_atol(const char *nptr);
 int		min_cost(int a, int b, int c, int d);
 int 	max(int a, int b);
+int		find_max(t_stack *stack);
 t_stack	error(void);
 void	free_stack(t_stack **stack);
 

@@ -32,7 +32,7 @@ int	main(int ac, char **av)
 		else
 			algorithm(&stack_a, &stack_b);
 	}
-	free_stack(stack_a);
-	free_stack(stack_b);
+	free_stack(&stack_a);
+	free_stack(&stack_b);
 	return (0);
 }

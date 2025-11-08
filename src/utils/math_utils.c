@@ -12,6 +12,19 @@
 
 #include "push_swap.h"
 
+int	find_max(t_stack *stack)
+{
+	int	max_index;
+
+	max_index = stack->index;
+	while (*stack)
+	{
+		if (max_index < stack->next->index)
+			max_index = stack->next->index;
+		stack = stack->next;
+	}
+}
+
 int min(int a, int b)
 {
     if (a < b)
